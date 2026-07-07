@@ -84,7 +84,7 @@
   border-radius: inherit;
 
   &:hover {
-    color: var(--color-white);
+    color: #ffffff;
     background-color: var(--color-dark-1);
   }
 
