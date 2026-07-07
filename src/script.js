@@ -107,8 +107,8 @@ class Todo {
     const isEmptyItems = this.state.items.length === 0
 
     this.emptyMessageElement.textContent =
-      isEmptyFilteredItems ? 'Tasks not found'
-        : isEmptyItems ? 'There are no tasks yet'
+      isEmptyFilteredItems ? 'Tasks not found 🥺'
+        : isEmptyItems ? 'There are no tasks yet 🌸✨'
           : ''
   }
 
@@ -190,7 +190,7 @@ class Todo {
   }
 
   onDeleteAllButtonClick = () => {
-    const isConfirmed = confirm('Are you sure you want to delete all?')
+    const isConfirmed = confirm('Are you sure you want to delete all? 💔🥺')
 
     if (isConfirmed) {
       this.state.items = []
