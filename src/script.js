@@ -74,7 +74,14 @@ class Todo {
 
     const items = this.state.filteredItems ?? this.state.items
 
-    this.listElement.innerHTML = items.map(({ id, title, isChecked }) => `
+    this.listElement.innerHTML = items.map(({ id, title, isChecked, createdAt, completedAt }) => {
+      const dateToFormat = completedAt || createdAt || new Date().toISOString()
+      const formattedDate = new Date(dateToFormat).toLocaleString('ru-RU', {
+        day: '2-digit', month: '2-digit', year: '2-digit',
+        hour: '2-digit', minute: '2-digit'
+      })
+
+      return `
       <li class="todo__item todo-item" data-js-todo-item>
         <input
           class="todo-item__checkbox"
@@ -88,7 +95,8 @@ class Todo {
           for="${id}"
           data-js-todo-item-label
         >
-          ${title}
+          <div class="todo-item__title">${title}</div>
+          <div class="todo-item__date">${formattedDate}</div>
         </label>
         <button
           class="todo-item__delete-button"
@@ -101,7 +109,7 @@ class Todo {
           </svg>
         </button>
       </li>
-    `).join('')
+    `}).join('')
 
     const isEmptyFilteredItems = this.state.filteredItems?.length === 0
     const isEmptyItems = this.state.items.length === 0
@@ -117,6 +125,8 @@ class Todo {
       id: crypto?.randomUUID() ?? Date.now().toString(),
       title,
       isChecked: false,
+      createdAt: new Date().toISOString(),
+      completedAt: null,
     })
     this.saveItemsToLocalStorage()
     this.render()
@@ -134,6 +144,7 @@ class Todo {
         return {
           ...item,
           isChecked: !item.isChecked,
+          completedAt: !item.isChecked ? new Date().toISOString() : null
         }
       }
 
